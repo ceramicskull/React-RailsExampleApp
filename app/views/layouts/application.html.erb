@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cps530</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application','https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<ul id ="menu">
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/welcome/index">Home</a></li>
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/welcome/page2">Install</a></li>
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/welcome/page3">Creating</a></li>
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/calculator/new">Demo</a></li>
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/welcome/page5">Conclusion</a></li>
+  <li id ="menu-li"><a id="link" href="http://530.nickbarss.ca/welcome/page6">Credits</a></li>
+</ul>
+<div id ="pag">
+	<div id="inner">
+<%= yield %>
+	</div>
+</div>
+
+</body>
+</html>

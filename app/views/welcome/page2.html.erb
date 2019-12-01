@@ -1,0 +1,55 @@
+<div id ="par">
+
+<h1 id="title"> Installing The Frameworks React &amp; Ruby on Rails</h1><br>
+
+<h2 id="title"> Installing React </h2>
+To add React to a webpage,
+<ol>
+<li>Add an empty div tag where you want the React component to be displayed. <br><br><code>&lt;div id="component_container"&gt;&lt;/div&gt;</code>.</li><br>
+
+<li>At the bottom of the HTML body, add the script tags to load React:
+<pre>  <code>
+    &lt;!-- Load React --&gt;
+     &lt;script src = "https://unpkg.com/react@16/umd/react.development.js" crossorigin&gt;&lt;/script&gt;
+     &lt;script src = "https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin&gt;&lt;/script&gt;
+  </code>
+</pre>
+</li>
+
+<li>You will then need to add a script for each React component:
+<pre>  <code>
+    &lt;!-- Example React Component --&gt;
+    &lt;script&gt;
+      class Class_Name extends React.Component {
+        render() {
+          return &lt;h2&gt;Component return&lt;/h2&gt;;
+        }
+      }
+      ReactDOM.render(&lt;Ex_Component /&gt;, document.getElementById('component_container'));
+    &lt;/script&gt;
+    </code>
+</pre>
+</li></ol>
+
+<h2 id="title"> Installing Ruby on Rails with React integration</h2>
+<ol>
+<li>Since Rails is a framework written in Ruby, you should first:</li><br>
+<ul>
+<li>Check if you have Ruby installed with <code>ruby -v</code> and check if you have a working database, such as SQLite3 with <code>sqlite3 --version</code>.</li>
+<br><li>Install Ruby with <code>sudo apt install ruby-full</code> and SQLite3 with <code>sudo apt install sqlite3 libsqlite3-dev</code>.</li>
+</ul>
+
+<br><li>Install Rails with <code>gem install rails</code>.</li>
+
+
+<br><li>Create a new Rails application with <code>rails new app_name</code>.</li>
+
+<br><li>Navigate to the newly created directory ~/app_name with <code>cd app_name</code>.</li>
+
+<br><li>Add the line <code>gem 'react-rails'</code> to the Gemfile in this directory</li>
+
+<br><li>type <code>bundle</code> in the command line to update the app's gems</li>
+<br><li>Start the Rails web server for the application with <code>bin/rails server</code>.</li>
+</ol>
+
+</div>

@@ -1,0 +1,529 @@
+<h1 id="title">Creating a react-rails app tutorial</h1>
+
+<h2 id="title"> Setting up a simple Calculator App </h2>
+<style>
+	#large{
+	overflow:scroll;
+	height:200px;
+	background-color: rgba(0,0,0,0.5);
+	color: #fff;
+}
+	</style>
+
+<ul> 
+	<br><li> Now to generate your first react component in rails. Navigate to your app directory<br><code>cd PATH_TO_APP <br>rails g react:component Calc</code></li>
+	<br><li> Now navigate to /app/assets/javascript/components and you should see a file called <code>calc.js.jsx</code></li>
+	<br><li> paste our example calculator code into the file:
+		<br>
+		<div id="large"><code>
+			var Calc = createReactClass({<br>
+
+<br>  render: function() {<br>
+    return (<br>
+      React.createElement(Calcer, null)<br>
+    );<br>
+  }<br>
+});<br>
+function NumButton(props) {<br>
+  return (<br>
+    React.createElement("button", { className: "num-button", onClick: props.onClick },<br>
+    props.value));<br>
+
+<br>
+<br>}<br>
+function FunButton(props) {<br>
+  return (<br>
+    React.createElement("button", { className: "fun-button", onClick: props.onClick },<br>
+    props.value));<br>
+
+<br>
+<br>}<br>
+
+<br>class CalculatorFrame extends React.Component {<br>
+  renderNumButton(i) {<br>
+    return (<br>
+      React.createElement(NumButton, {<br>
+        value: i,<br>
+        onClick: () => this.props.onClick(i) }));<br>
+
+<br>
+<br>  }<br>
+  renderFunButton(i) {<br>
+    return (<br>
+      React.createElement(FunButton, {<br>
+        value: i,<br>
+        onClick: () => this.props.onClick(i) }));<br>
+
+<br>
+<br>  }<br>
+  render() {<br>
+    return (<br>
+      React.createElement("div", null,<br>
+      React.createElement("div", { className: "calc-row" },<br>
+      this.renderNumButton(1),<br>
+      this.renderNumButton(2),<br>
+      this.renderNumButton(3),<br>
+      this.renderNumButton("C")),<br>
+
+<br>      React.createElement("div", { className: "calc-row" },<br>
+      this.renderNumButton(4),<br>
+      this.renderNumButton(5),<br>
+      this.renderNumButton(6),<br>
+      this.renderNumButton("/")),<br>
+
+<br>      React.createElement("div", { className: "calc-row" },<br>
+      this.renderNumButton(7),<br>
+      this.renderNumButton(8),<br>
+      this.renderNumButton(9),<br>
+      this.renderNumButton("x")),<br>
+
+<br>      React.createElement("div", { className: "calc-row" },<br>
+      this.renderNumButton(0),<br>
+      this.renderNumButton("+"),<br>
+      this.renderNumButton("-"),<br>
+      this.renderNumButton("="))));<br>
+
+<br>
+<br>
+<br>  }}<br>
+
+<br>class Calcer extends React.Component {<br>
+  constructor(props) {<br>
+    super(props);<br>
+    this.state = {<br>
+      num1: "",<br>
+      fun: "",<br>
+      num2: "" };<br>
+
+<br>  }<br>
+  handleClick(i) {<br>
+    if (Number.isInteger(i) && this.state.fun == "=") {<br>
+
+<br>      this.setState({<br>
+        num1: this.state.num1 + i,<br>
+        fun: "",<br>
+        num2: "" });<br>
+
+<br>    } else<br>
+    if (Number.isInteger(i)) {<br>
+
+<br>      this.setState({<br>
+        num1: this.state.num1 + i });<br>
+
+<br>    } else<br>
+    if (i == "C") {<br>
+      this.setState({<br>
+        num1: "",<br>
+        fun: "",<br>
+        num2: "" });<br>
+
+<br>    } else<br>
+    {<br>
+      var num2;<br>
+      if (this.state.num2.length != 0) {<br>
+        num2 = this.adder();<br>
+      } else<br>
+      {<br>
+        num2 = this.state.num1;<br>
+      }<br>
+      this.setState({<br>
+        num1: "",<br>
+        fun: i,<br>
+        num2: num2 });<br>
+
+<br>    }<br>
+  }<br>
+  adder() {<br>
+    var num2;<br>
+    switch (this.state.fun) {<br>
+      case "+":<br>
+        num2 = parseInt(this.state.num1) + parseInt(this.state.num2);<br>
+        break;<br>
+      case "-":<br>
+        num2 = parseInt(this.state.num1) - parseInt(this.state.num2);<br>
+        break;<br>
+      case "x":<br>
+        num2 = parseInt(this.state.num1) * parseInt(this.state.num2);<br>
+        break;<br>
+      case "/":<br>
+        num2 = parseInt(this.state.num1) / parseInt(this.state.num2);<br>
+        break;<br>
+      case "=":<br>
+        num2 = "";<br>
+        break;}<br>
+
+<br>    return num2;<br>
+  }<br>
+  render() {<br>
+    const num1 = this.state.num1;<br>
+    const num2 = this.state.num2;<br>
+    const fun = this.state.fun;<br>
+    return (<br>
+      React.createElement("div", { className: "calculator" },<br>
+      React.createElement("div", { className: "calc-screen" },<br>
+      React.createElement("div", null, num2 + " " + fun + " " + num1)),<br>
+
+<br>
+<br>      React.createElement("div", { className: "calculator-frame" },<br>
+      React.createElement(CalculatorFrame, {<br>
+        onClick: i => this.handleClick(i) }))));<br>
+}}<br>
+
+</code></div></li>
+<br><li> Once the code is saved in the file, type in the command line <code> rails generate controller calculator new</code></li>
+<br> <li> Now if you navigate to <code> /app/views/calculator </code> you will see a file <code> new.html.erb </code> </li>
+<br><li> Edit this file and paste the following code:<br><div id="large"><code>
+	&lt;h1 &gt;A Simple React Calculator&lt;/h4&gt;<br>
+&lt;br&gt;<br>
+&lt;div id="errors" style="<br>
+  background: #c00;<br>
+  color: #fff;<br>
+  display: none;<br>
+  margin: -20px -20px 20px;<br>
+  padding: 20px;<br>
+  white-space: pre-wrap;<br>
+"&gt;&lt;/div&gt;<br>
+
+<br>&lt;%= react_component("Calc") %&gt;<br>
+
+<br>&lt;%= javascript_include_tag "clicker"<br>
+# =&gt; &lt;script src="/assets/javascripts/clicker.js"&gt;&lt;/script&gt;<br>
+%&gt;<br>
+&lt;!-- partial --&gt;<br>
+&lt;%= javascript_include_tag "https://unpkg.com/react@16/umd/react.development.js"<br>
+# =&gt; &lt;script src="https://unpkg.com/react@16/umd/react.development.js"&gt;&lt;/script&gt;<br>
+%&gt;<br>
+&lt;%= javascript_include_tag "https://unpkg.com/react@16/umd/react.development.js"<br>
+# =&gt; &lt;script src="https://unpkg.com/react@16/umd/react.development.js"&gt;&lt;/script&gt;<br>
+%&gt;<br>
+</code></div></li>
+<br><li>Now navigate to <code> /assets/stylesheets </code> and edit <code> calculator.scss </code></li>
+<br><li>And paste the following css into the file: <br><div id="large"> <code>ol,<br>
+ul {<br>
+	padding-left: 30px;<br>
+}<br>
+
+<br>.calc-row:after {<br>
+	clear: both;<br>
+	content: "";<br>
+	display: table;<br>
+}<br>
+
+<br>.calc-screen {<br>
+	padding-left: 30px;<br>
+	background: #fff;<br>
+	border: 1px solid #999;<br>
+	font-size: 12px;<br>
+	font-weight: bold;<br>
+	line-height: 34px;<br>
+	height: 32px;<br>
+	margin-right: -1px;<br>
+	margin-top: -1px;<br>
+	padding: 0;<br>
+	text-align: right;<br>
+	width: 131px;<br>
+}<br>
+
+<br>.status {<br>
+	margin-bottom: 10px;<br>
+}<br>
+
+<br>.num-button {<br>
+	background: #fff;<br>
+	border: 1px solid #999;<br>
+	float: left;<br>
+	font-size: 24px;<br>
+	font-weight: bold;<br>
+	line-height: 34px;<br>
+	height: 34px;<br>
+	margin-right: -1px;<br>
+	margin-top: -1px;<br>
+	padding: 0;<br>
+	text-align: center;<br>
+	width: 34px;<br>
+}<br>
+
+<br>.num-button:focus {<br>
+	outline: none;<br>
+}<br>
+
+<br>.kbd-navigation .num-button:focus {<br>
+	background: #ddd;<br>
+}<br>
+
+<br>.calculator {<br>
+	display: flex;<br>
+	flex-direction: column;<br>
+}<br>
+
+<br>button,<br>
+hr,<br>
+input {<br>
+	overflow: visible<br>
+}<br>
+
+<br>audio,<br>
+canvas,<br>
+progress,<br>
+video {<br>
+	display: inline-block<br>
+}<br>
+
+<br>progress,<br>
+sub,<br>
+sup {<br>
+	vertical-align: baseline<br>
+}<br>
+
+<br>html {<br>
+	font-family: sans-serif;<br>
+	line-height: 1.15;<br>
+	-ms-text-size-adjust: 100%;<br>
+	-webkit-text-size-adjust: 100%<br>
+}<br>
+
+<br>body {<br>
+	margin: 0<br>
+}<br>
+
+<br>menu,<br>
+article,<br>
+aside,<br>
+details,<br>
+footer,<br>
+header,<br>
+nav,<br>
+section {<br>
+	display: block<br>
+}<br>
+
+<br>h1 {<br>
+	font-size: 2em;<br>
+	margin: .67em 0<br>
+}<br>
+
+<br>figcaption,<br>
+figure,<br>
+main {<br>
+	display: block<br>
+}<br>
+
+<br>figure {<br>
+	margin: 1em 40px<br>
+}<br>
+
+<br>hr {<br>
+	box-sizing: content-box;<br>
+	height: 0<br>
+}<br>
+
+<br>code,<br>
+kbd,<br>
+pre,<br>
+samp {<br>
+	font-family: monospace, monospace;<br>
+	font-size: 1em<br>
+}<br>
+
+<br>a {<br>
+	background-color: transparent;<br>
+	-webkit-text-decoration-skip: objects<br>
+}<br>
+
+<br>a:active,<br>
+a:hover {<br>
+	outline-width: 0<br>
+}<br>
+
+<br>abbr[title] {<br>
+	border-bottom: none;<br>
+	text-decoration: underline;<br>
+	text-decoration: underline dotted<br>
+}<br>
+
+<br>b,<br>
+strong {<br>
+	font-weight: bolder<br>
+}<br>
+
+<br>dfn {<br>
+	font-style: italic<br>
+}<br>
+
+<br>mark {<br>
+	background-color: #ff0;<br>
+	color: #000<br>
+}<br>
+
+<br>small {<br>
+	font-size: 80%<br>
+}<br>
+
+<br>sub,<br>
+sup {<br>
+	font-size: 75%;<br>
+	line-height: 0;<br>
+	position: relative<br>
+}<br>
+
+<br>sub {<br>
+	bottom: -.25em<br>
+}<br>
+
+<br>sup {<br>
+	top: -.5em<br>
+}<br>
+
+<br>audio:not([controls]) {<br>
+	display: none;<br>
+	height: 0<br>
+}<br>
+
+<br>img {<br>
+	border-style: none<br>
+}<br>
+
+<br>svg:not(:root) {<br>
+	overflow: hidden<br>
+}<br>
+
+<br>button,<br>
+input,<br>
+optgroup,<br>
+select,<br>
+textarea {<br>
+	font-family: sans-serif;<br>
+	font-size: 100%;<br>
+	line-height: 1.15;<br>
+	margin: 0<br>
+}<br>
+
+<br>button,<br>
+input {}<br>
+
+<br>button,<br>
+select {<br>
+	text-transform: none<br>
+}<br>
+
+<br>[type=submit],<br>
+[type=reset],<br>
+button,<br>
+html [type=button] {<br>
+	-webkit-appearance: button<br>
+}<br>
+
+<br>[type=button]::-moz-focus-inner,<br>
+[type=reset]::-moz-focus-inner,<br>
+[type=submit]::-moz-focus-inner,<br>
+button::-moz-focus-inner {<br>
+	border-style: none;<br>
+	padding: 0<br>
+}<br>
+
+<br>[type=button]:-moz-focusring,<br>
+[type=reset]:-moz-focusring,<br>
+[type=submit]:-moz-focusring,<br>
+button:-moz-focusring {<br>
+	outline: ButtonText dotted 1px<br>
+}<br>
+
+<br>fieldset {<br>
+	border: 1px solid silver;<br>
+	margin: 0 2px;<br>
+	padding: .35em .625em .75em<br>
+}<br>
+
+<br>legend {<br>
+	box-sizing: border-box;<br>
+	color: inherit;<br>
+	display: table;<br>
+	max-width: 100%;<br>
+	padding: 0;<br>
+	white-space: normal<br>
+}<br>
+
+<br>progress {}<br>
+
+<br>textarea {<br>
+	overflow: auto<br>
+}<br>
+
+<br>[type=checkbox],<br>
+[type=radio] {<br>
+	box-sizing: border-box;<br>
+	padding: 0<br>
+}<br>
+
+<br>[type=number]::-webkit-inner-spin-button,<br>
+[type=number]::-webkit-outer-spin-button {<br>
+	height: auto<br>
+}<br>
+
+<br>[type=search] {<br>
+	-webkit-appearance: textfield;<br>
+	outline-offset: -2px<br>
+}<br>
+
+<br>[type=search]::-webkit-search-cancel-button,<br>
+[type=search]::-webkit-search-decoration {<br>
+	-webkit-appearance: none<br>
+}<br>
+
+<br>::-webkit-file-upload-button {<br>
+	-webkit-appearance: button;<br>
+	font: inherit<br>
+}<br>
+
+<br>summary {<br>
+	display: list-item<br>
+}<br>
+
+<br>[hidden],<br>
+template {<br>
+	display: none<br>
+}<br>
+
+<br>
+<br>/*# sourceMappingURL=normalize.min.css.map */<br></code></div></li>
+
+<br><li> Finally navigate to /assets/javascript and create a new file called <code> clicker.js </code> with the following contents: <br><div id="large"><code>Window.addEventListener('mousedown', function(e) {<br>
+  document.body.classList.add('mouse-navigation');<br>
+  document.body.classList.remove('kbd-navigation');<br>
+});<br>
+window.addEventListener('keydown', function(e) {<br>
+  if (e.keyCode === 9) {<br>
+    document.body.classList.add('kbd-navigation');<br>
+    document.body.classList.remove('mouse-navigation');<br>
+  }<br>
+});<br>
+window.addEventListener('click', function(e) {<br>
+  if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {<br>
+    e.preventDefault();<br>
+  }<br>
+});<br>
+window.onerror = function(message, source, line, col, error) {<br>
+  var text = error ? error.stack || error : message + ' (at ' + source + ':' + line + ':' + col + ')';<br>
+  errors.textContent += text + '\n';<br>
+  errors.style.display = '';<br>
+};<br>
+console.error = (function(old) {<br>
+  return function error() {<br>
+    errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';<br>
+    errors.style.display = '';<br>
+    old.apply(this, arguments);<br>
+  }<br>
+})(console.error);<br></code></div><br> This essentially tells the webpage to listen for clicks on the react component</li>
+
+<br><li> Now that all the files in place you only have to make a few minor adjustments to launch your calculator app! </li>
+<br><li> Open the file <code> YOUR_APP/config/routes.rb </code> in your favourite text editor and add the following line: <br><code>resources :calculator</code></li>
+<br><li> Then open the file <code> YOUR_APP/config/initializers/assets.rb </code> and add the line <br><code> Rails.application.config.assets.precompile += %w( clicker.js )</code><br> This enables you to use the clicker script with your app </li>
+
+<br><li> Finally, (whew...) start the server: <code> rails s -p 3000 -b 0.0.0.0</code></li>
+<br><li> Then navigate to localhost in your web browser <br> You should see something similar to our demo page if you did everything correctly </li>
+
+<br><h2 id="title"> Thank you for following our React-Rails tutorial! </h2>
+
+
+
+
